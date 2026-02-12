@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do - Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <section id="tasks-view" class="view active">
+      
+      <!-- Dateee -->
+      <div class="date-display" id="current-date">February 1, 2026</div>
+
+      <div class="priority-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="LOW">Low</button>
+        <button class="filter-btn" data-filter="MEDIUM">Medium</button>
+        <button class="filter-btn" data-filter="HIGH">High</button>
+      </div>
+
+      <!-- Active and done tasks abi completed -->
+      <div class="tasks-section">
+        <h3 class="section-title">Active Tasks</h3>
+        <div id="active-tasks" class="tasks-list"></div>
+      </div>
+
+      <div class="tasks-section">
+        <h3 class="section-title">Completed Tasks</h3>
+        <div id="completed-tasks" class="tasks-list"></div>
+      </div>
+
+    </section>
+
+    <!-- CALENDAR -->
+    <section id="calendar-view" class="view">
+      
+      <div class="calendar-header">
+        <button id="prev-month">←</button>
+        <h2 id="month-year">February 2026</h2>
+        <button id="next-month">→</button>
+      </div>
+
+      <!-- Tasks 4 each month -->
+      <div id="calendar-tasks" class="tasks-list"></div>
+
+    </section>
+
+    <button id="add-btn" class="add-button">+</button>
+
+  </div>
+
+  <!-- Modal 4 adding/edit tasks -->
+  <div id="task-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title">Add a new Task</h3>
+      <form id="task-form">
+        
+        <input type="text" id="task-title" placeholder="Task title" required>
+        
+        <select id="task-priority" required>
+          <option value="">Select Priority</option>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+
+        <label>Start Date</label>
+        <input type="date" id="task-start-date" required>
+
+        <label>Due Date</label>
+        <input type="date" id="task-due-date" required>
+
+        <div class="modal-buttons">
+          <button type="button" id="cancel-btn">Cancel</button>
+          <button type="submit">Add Task</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-view="tasks">
+      <span>📋</span>
+      <span>Tasks</span>
+    </button>
+    <button class="nav-btn" data-view="calendar">
+      <span>📅</span>
+      <span>Calendar</span>
+    </button>
+  </nav>
+
+  <script src="index.js"></script>
+
+</body>
+</html>
