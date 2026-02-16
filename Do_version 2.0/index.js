@@ -76,19 +76,14 @@ class CalendarManager {
     ];
   }
 
-  // Change MONTH
-  changeMonth(direction) {
-    this.currentMonth += direction;
-    
-    if (this.currentMonth > 11) {
-      this.currentMonth = 0;
-      this.currentYear++;
-    }
-    
-    if (this.currentMonth < 0) {
-      this.currentMonth = 11;
-      this.currentYear--;
-    }
+  // Set month from dropdown
+  setMonth(month) {
+    this.currentMonth = parseInt(month);
+  }
+
+  // Set year from dropdown  
+  setYear(year) {
+    this.currentYear = parseInt(year);
   }
 
   // Current month as string
@@ -171,8 +166,9 @@ function createTaskHTML(task) {
 
 // Render calendar view
 function renderCalendar() {
-  // Update month/year display
-  document.getElementById('month-year').textContent = calendarManager.getCurrentMonthYear();
+  // Update dropdowns to match current month/year
+  document.getElementById('month-select').value = calendarManager.currentMonth;
+  document.getElementById('year-select').value = calendarManager.currentYear;
   
   // 2 get tasks 4 current month
   const monthTasks = calendarManager.getTasksForCurrentMonth(taskManager);
@@ -195,6 +191,34 @@ function updateDateDisplay() {
   const today = new Date();
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+}
+
+// Populate year dropdown (current year + next 5 years cuz time travel ain't invented yet)
+function populateYearDropdown() {
+  const yearSelect = document.getElementById('year-select');
+  const currentYear = new Date().getFullYear();
+  
+  for (let i = 0; i < 6; i++) {
+    const year = currentYear + i;
+    const option = document.createElement('option');
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+  }
+  
+  yearSelect.value = currentYear;
+}
+
+// Set minimum date on date inputs (no time travel to yesterday allowed)
+function setMinimumDates() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const minDate = `${year}-${month}-${day}`;
+  
+  document.getElementById('task-start-date').min = minDate;
+  document.getElementById('task-due-date').min = minDate;
 }
 
 
@@ -242,6 +266,7 @@ function handleAddTask() {
   editingTaskId = null;
   document.getElementById('modal-title').textContent = 'Add Task';
   document.getElementById('task-form').reset();
+  setMinimumDates(); // reset min dates when opening modal
   document.getElementById('task-modal').classList.add('active');
 }
 
@@ -256,6 +281,7 @@ function handleEditTask(id) {
     document.getElementById('task-priority').value = task.priority;
     document.getElementById('task-start-date').value = task.startDate;
     document.getElementById('task-due-date').value = task.dueDate;
+    setMinimumDates(); // but still no time travel
     document.getElementById('task-modal').classList.add('active');
   }
 }
@@ -265,6 +291,7 @@ function handleDeleteTask(id) {
   if (confirm('Are you sure you want to delete this task?')) {
     taskManager.deleteTask(id);
     renderTasks();
+    renderCalendar(); // update calendar too
   }
 }
 
@@ -272,6 +299,7 @@ function handleDeleteTask(id) {
 function handleToggleTask(id) {
   taskManager.toggleTask(id);
   renderTasks();
+  renderCalendar(); // calendar needs update too
 }
 
 // Handle form submit
@@ -292,7 +320,8 @@ function handleFormSubmit(e) {
   }
   
   closeModal();
-  renderTasks();
+  renderTasks(); // refresh tasks view
+  renderCalendar(); // refresh calendar too so it shows immediately
 }
 
 function closeModal() {
@@ -300,9 +329,13 @@ function closeModal() {
   editingTaskId = null;
 }
 
-// 4 month change
-function handleMonthChange(direction) {
-  calendarManager.changeMonth(direction);
+// When month or year changes in dropdown
+function handleCalendarChange() {
+  const selectedMonth = document.getElementById('month-select').value;
+  const selectedYear = document.getElementById('year-select').value;
+  
+  calendarManager.setMonth(selectedMonth);
+  calendarManager.setYear(selectedYear);
   renderCalendar();
 }
 
@@ -329,9 +362,9 @@ document.getElementById('add-btn').addEventListener('click', handleAddTask);
 document.getElementById('cancel-btn').addEventListener('click', closeModal);
 document.getElementById('task-form').addEventListener('submit', handleFormSubmit);
 
-// Calendar nav
-document.getElementById('prev-month').addEventListener('click', () => handleMonthChange(-1));
-document.getElementById('next-month').addEventListener('click', () => handleMonthChange(1));
+// Calendar dropdowns
+document.getElementById('month-select').addEventListener('change', handleCalendarChange);
+document.getElementById('year-select').addEventListener('change', handleCalendarChange);
 
 // Close modal when clicking outside
 document.getElementById('task-modal').addEventListener('click', function(e) {
@@ -348,11 +381,13 @@ document.getElementById('task-modal').addEventListener('click', function(e) {
 // Update date display
 updateDateDisplay();
 
-// Just some example 4 testing sake
-taskManager.addTask('Complete project documentation', '2026-02-01', '2026-02-10', 'HIGH');
-taskManager.addTask('Review code', '2026-02-05', '2026-02-12', 'MEDIUM');
-taskManager.addTask('Call Precious', '2026-02-01', '2026-02-03', 'HIGH');
-taskManager.addTask('Watch Bridgerton', '2026-02-03', '2026-02-05', 'LOW');
+// Populate year dropdown with current + next 5 years
+populateYearDropdown();
+
+// Set min dates to today
+setMinimumDates();
+
+// No sample tasks cuz we ain't freeloaders
 
 // Initial render
 renderTasks();
