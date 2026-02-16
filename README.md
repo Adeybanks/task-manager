@@ -13,6 +13,6 @@ A simple web app to manage your tasks.
 3. Use calendar to check tasks.
 4. Edit or delete as needed.
 
-Live site: 
+Live site: https://adeybanks.github.io/task-manager/
 
 Built with HTML, CSS, and JavaScript.
