@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do - Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- TASKS VIEW -->
+    <section id="tasks-view" class="view active">
+      
+      <!-- Date at top left -->
+      <div class="date-display" id="current-date">February 1, 2026</div>
+
+      <!-- Priority filter buttons -->
+      <div class="priority-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="LOW">Low</button>
+        <button class="filter-btn" data-filter="MEDIUM">Medium</button>
+        <button class="filter-btn" data-filter="HIGH">High</button>
+      </div>
+
+      <!-- Active Tasks -->
+      <div class="tasks-section">
+        <h3 class="section-title">Active Tasks</h3>
+        <div id="active-tasks" class="tasks-list"></div>
+      </div>
+
+      <!-- Completed Tasks -->
+      <div class="tasks-section">
+        <h3 class="section-title">Completed Tasks</h3>
+        <div id="completed-tasks" class="tasks-list"></div>
+      </div>
+
+    </section>
+
+    <!-- CALENDAR VIEW -->
+    <section id="calendar-view" class="view">
+      
+      <!-- Month/Year selectors -->
+      <div class="calendar-header">
+        <select id="month-select" class="month-select">
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+        <select id="year-select" class="year-select"></select>
+      </div>
+
+      <!-- Tasks for selected month -->
+      <div id="calendar-tasks" class="tasks-list"></div>
+
+    </section>
+
+    <!-- Add button at bottom right -->
+    <button id="add-btn" class="add-button">+</button>
+
+  </div>
+
+  <!-- Modal for adding/editing tasks -->
+  <div id="task-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title">Add Task</h3>
+      <form id="task-form">
+        
+        <input type="text" id="task-title" placeholder="Task title" required>
+        
+        <select id="task-priority" required>
+          <option value="">Select Priority</option>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+
+        <label>Start Date</label>
+        <input type="date" id="task-start-date" class="date-input" required>
+
+        <label>Due Date</label>
+        <input type="date" id="task-due-date" class="date-input" required>
+
+        <div class="modal-buttons">
+          <button type="button" id="cancel-btn">Cancel</button>
+          <button type="submit">Add Task</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-view="tasks">
+      <span>📋</span>
+      <span>Tasks</span>
+    </button>
+    <button class="nav-btn" data-view="calendar">
+      <span>📅</span>
+      <span>Calendar</span>
+    </button>
+  </nav>
+
+  <script src="index.js"></script>
+
+</body>
+</html>
