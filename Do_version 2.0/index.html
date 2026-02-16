@@ -10,11 +10,13 @@
 
   <div class="container">
 
+    <!-- TASKS VIEW -->
     <section id="tasks-view" class="view active">
       
-      <!-- Dateee -->
+      <!-- Date at top left -->
       <div class="date-display" id="current-date">February 1, 2026</div>
 
+      <!-- Priority filter buttons -->
       <div class="priority-filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="LOW">Low</button>
@@ -22,12 +24,13 @@
         <button class="filter-btn" data-filter="HIGH">High</button>
       </div>
 
-      <!-- Active and done tasks abi completed -->
+      <!-- Active Tasks -->
       <div class="tasks-section">
         <h3 class="section-title">Active Tasks</h3>
         <div id="active-tasks" class="tasks-list"></div>
       </div>
 
+      <!-- Completed Tasks -->
       <div class="tasks-section">
         <h3 class="section-title">Completed Tasks</h3>
         <div id="completed-tasks" class="tasks-list"></div>
@@ -35,28 +38,42 @@
 
     </section>
 
-    <!-- CALENDAR -->
+    <!-- CALENDAR VIEW -->
     <section id="calendar-view" class="view">
       
+      <!-- Month/Year selectors -->
       <div class="calendar-header">
-        <button id="prev-month">←</button>
-        <h2 id="month-year">February 2026</h2>
-        <button id="next-month">→</button>
+        <select id="month-select" class="month-select">
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+        <select id="year-select" class="year-select"></select>
       </div>
 
-      <!-- Tasks 4 each month -->
+      <!-- Tasks for selected month -->
       <div id="calendar-tasks" class="tasks-list"></div>
 
     </section>
 
+    <!-- Add button at bottom right -->
     <button id="add-btn" class="add-button">+</button>
 
   </div>
 
-  <!-- Modal 4 adding/edit tasks -->
+  <!-- Modal for adding/editing tasks -->
   <div id="task-modal" class="modal">
     <div class="modal-content">
-      <h3 id="modal-title">Add a new Task</h3>
+      <h3 id="modal-title">Add Task</h3>
       <form id="task-form">
         
         <input type="text" id="task-title" placeholder="Task title" required>
@@ -69,10 +86,10 @@
         </select>
 
         <label>Start Date</label>
-        <input type="date" id="task-start-date" required>
+        <input type="date" id="task-start-date" class="date-input" required>
 
         <label>Due Date</label>
-        <input type="date" id="task-due-date" required>
+        <input type="date" id="task-due-date" class="date-input" required>
 
         <div class="modal-buttons">
           <button type="button" id="cancel-btn">Cancel</button>
